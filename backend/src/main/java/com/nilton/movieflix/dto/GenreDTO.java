@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nilton.movieflix.entities.Genre;
+import com.nilton.movieflix.entities.Movie;
 
 public class GenreDTO implements Serializable {
 
@@ -23,11 +24,16 @@ public class GenreDTO implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
-
+	
 	public GenreDTO(Genre entity) {
 		id = entity.getId();
 		name = entity.getName();
-		entity.getMovies().forEach(movie -> this.movies.add(new MovieDTO(movie)));
+	}
+
+	public GenreDTO(Genre entity, Set<Movie> setMovies) {
+		id = entity.getId();
+		name = entity.getName();
+		setMovies.forEach(m -> this.movies.add(new MovieDTO(m)));
 	}
 
 	public Long getId() {
