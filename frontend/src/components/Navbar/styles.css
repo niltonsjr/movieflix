@@ -1,6 +1,7 @@
 .main-nav {
   padding: 0 18px;
   min-height: 70px;
+  min-width: 320px;
   font-size: 24px;
 }
 
