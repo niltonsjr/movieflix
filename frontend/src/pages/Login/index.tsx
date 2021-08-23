@@ -1,5 +1,6 @@
 import './styles.css';
 import { ReactComponent as MainImage } from 'assets/images/main-image.svg';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -18,7 +19,11 @@ const Login = () => {
         <form className="login-form-container">
           <input type="text" placeholder="Email" />
           <input type="text" placeholder="Senha" />
-          <button className="btn btn-primary" type="button">FAZER LOGIN</button>
+          <Link to="/movies">
+            <button className="btn btn-primary" type="button">
+              FAZER LOGIN
+            </button>
+          </Link>
         </form>
       </div>
     </div>

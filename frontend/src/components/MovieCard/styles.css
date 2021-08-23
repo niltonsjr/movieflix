@@ -1,0 +1,37 @@
+.card-container {
+  font-size: 28px;  
+  margin-bottom: 20px;
+  padding-top: 26px;
+  padding-bottom: 34px;
+}
+
+.image-container img {
+  width: 100%;
+}
+
+.content-container {
+    margin-left: 15px;
+    margin-top: 10px;
+
+}
+
+.content-container h1 {
+  font-size: 0.71em;
+  letter-spacing: -0.015em;
+  font-weight: bold;
+  line-height: 27px;
+}
+
+.content-container h2 {
+    font-size: 0.57em;
+    font-weight: bold;
+    letter-spacing: -0.015em;
+    line-height: 22px;
+    color: #FFC700;
+}
+
+.content-container p {
+    font-size: 0.5em;
+    margin-bottom: 0px;
+    line-height: 19px;
+}

@@ -45,6 +45,7 @@
 }
 
 .login-card-container button {
+  width: 265px;
   height: 50px;
   font-weight: bold;
   font-size: 0.4em;
@@ -70,6 +71,7 @@
   }
 
   .login-card-container button {
+    width: 384px;
     height: 65px;
     margin-top: 40px;
   }

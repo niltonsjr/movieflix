@@ -1,0 +1,46 @@
+.catalog-container {
+  font-size: 28px;
+  min-width: 320px;
+  padding: 0;
+}
+
+.catalog-filter-container {
+  margin: 20px 10px;
+  height: 60px;
+}
+
+.catalog-filter-container form {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.catalog-filter-container select {
+  width: 260px;
+  height: 50px;
+  background: #6c6c6c;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  border: 1px solid #e1e1e1;
+  color: #fff;
+  font-size: 0.65em;
+  padding-left: 12px;
+}
+
+.catalog-movies-container {
+  margin: -1px;
+  padding: 0;
+}
+
+@media (min-width: 576px) {
+
+  .catalog-filter-container {
+    height: 80px;
+  }
+
+  .catalog-filter-container form {
+    justify-content: start;
+    margin-left: 20px;
+  }
+}
