@@ -18,22 +18,22 @@ const MovieCatalog = () => {
       </div>
       <div className="row catalog-movies-container">
         <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/movies/id">
+          <Link to="/movies/1">
             <MovieCard />
           </Link>
         </div>
         <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/movies/id">
+          <Link to="/movies/1">
             <MovieCard />
           </Link>
         </div>
         <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/movies/id">
+          <Link to="/movies/1">
             <MovieCard />
           </Link>
         </div>
         <div className="col-sm-6 col-lg-4 col-xl-3">
-          <Link to="/movies/id">
+          <Link to="/movies/1">
             <MovieCard />
           </Link>
         </div>

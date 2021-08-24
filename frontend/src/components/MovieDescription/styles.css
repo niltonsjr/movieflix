@@ -1,0 +1,28 @@
+.movie-description-container img {
+  padding: 0 20px;
+}
+
+.movie-review-container {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+}
+
+.movie-review-container input {
+  font-size: 1em;
+  width: 280px;
+  height: 50px;
+  padding: 13px 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+}
+
+.movie-review-container button {
+  font-size: 1em;
+  width: 280px;
+  height: 50px;
+  font-weight: bold;
+  margin: 24px 17px auto 17px;
+}

@@ -1,5 +1,5 @@
 .card-container {
-  font-size: 28px;  
+  font-size: 28px;
   margin-bottom: 20px;
   padding-top: 26px;
   padding-bottom: 34px;
@@ -10,9 +10,7 @@
 }
 
 .content-container {
-    margin-left: 15px;
-    margin-top: 10px;
-
+  margin: 10px 20px 0 20px;
 }
 
 .content-container h1 {
@@ -23,15 +21,31 @@
 }
 
 .content-container h2 {
-    font-size: 0.57em;
-    font-weight: bold;
-    letter-spacing: -0.015em;
-    line-height: 22px;
-    color: #FFC700;
+  font-size: 0.57em;
+  font-weight: bold;
+  letter-spacing: -0.015em;
+  line-height: 22px;
+  color: #ffc700;
 }
 
 .content-container p {
-    font-size: 0.5em;
-    margin-bottom: 0px;
-    line-height: 19px;
+  font-size: 0.5em;
+  margin-bottom: 0px;
+  line-height: 19px;
+}
+
+.description-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  margin-top: 16px;
+}
+
+.description-container p {
+  font-size: 0.57em;
+  font-weight: normal;
+  text-align: justify;
+  letter-spacing: -0.015em;
+  line-height: 22px;
+  color: #9E9E9E;
+  padding: 13px 10px;
 }

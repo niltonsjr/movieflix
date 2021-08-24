@@ -1,0 +1,13 @@
+.review-container {
+  padding: 17px 10px 0 10px;
+  font-size: 16px;
+}
+
+.username-container {
+  display: flex;
+}
+
+.review-content-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+}

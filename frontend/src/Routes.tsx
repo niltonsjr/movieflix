@@ -1,3 +1,4 @@
+import MovieDescription from 'components/MovieDescription';
 import Navbar from 'components/Navbar';
 import Login from 'pages/Login';
 import MovieCatalog from 'pages/MovieCatalog';
@@ -12,6 +13,9 @@ const Routes = () => (
       </Route>
       <Route path="/movies" exact>
         <MovieCatalog />
+      </Route>
+      <Route path="/movies/:movieId">
+        <MovieDescription />
       </Route>
     </Switch>
   </BrowserRouter>
