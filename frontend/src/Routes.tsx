@@ -1,7 +1,8 @@
-import MovieDescription from 'components/MovieDescription';
 import Navbar from 'components/Navbar';
 import Login from 'pages/Login';
 import MovieCatalog from 'pages/MovieCatalog';
+import MovieDescription from 'pages/MovieDescription';
+
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 const Routes = () => (

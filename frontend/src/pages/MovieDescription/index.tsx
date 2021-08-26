@@ -1,13 +1,13 @@
-import MovieCard from 'components/MovieCard';
+import MovieDetails from 'components/MovieDetails';
 import UserReview from 'components/UserReview';
 
 import './styles.css';
 
 const MovieDescription = () => {
   return (
-    <div className="container">
+    <div className="container my-4">
       <div className="movie-description-container">
-        <MovieCard />
+        <MovieDetails />
       </div>
       <div className="movie-review-container base-card">
         <input type="text" placeholder="Deixe sua avaliação aqui" />
@@ -17,6 +17,8 @@ const MovieDescription = () => {
       </div>
       <div className="movie-reviewlist-container base-card">
         <UserReview />
+        <UserReview />
+        <UserReview />    
       </div>
     </div>
   );
