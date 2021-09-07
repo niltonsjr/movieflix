@@ -1,28 +1,38 @@
-import movieImage from 'assets/images/movie-image.png';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { Movie } from 'types/movie';
+import { BASE_URL } from 'util/requests';
 
 import './styles.css';
 
+type UrlParams = {
+  movieId: string;
+};
+
 const MovieDetails = () => {
+  
+  const { movieId } = useParams<UrlParams>();
+
+  const [movie, setMovie] = useState<Movie>();
+
+  useEffect(() => {
+    axios.get(`${BASE_URL}/movies/${movieId}`).then((response) => {
+      setMovie(response.data);
+    });
+  }, [movieId]);
+
   return (
     <div className="base-card details-card-container">
       <div className="details-image-container">
-        <img src={movieImage} alt="portada" />
+        <img src={movie?.imgUrl} alt={movie?.title} />
       </div>
       <div className="details-content-container">
-        <h1>O Retorno do Rei</h1>
-        <h2>2013</h2>
-        <p>O olho do inimigo está se movendo.</p>
+        <h1>{movie?.title}</h1>
+        <h2>{movie?.year}</h2>
+        <p>{movie?.subTitle}</p>
         <div className="details-description-container">
-          <p>
-            O confronto final entre as forças do bem e do mal que lutam pelo
-            controle do futuro da Terra Média se aproxima. Sauron planeja um
-            grande ataque a Minas Tirith, capital de Gondor, o que faz com que
-            Gandalf e Pippin partam para o local na intenção de ajudar a
-            resistência. Um exército é reunido por Theoden em Rohan, em mais uma
-            tentativa de deter as forças de Sauron. Enquanto isso, Frodo, Sam e
-            Gollum seguem sua viagem rumo à Montanha da Perdição para destruir o
-            anel.
-          </p>
+          <p>{movie?.synopsis}</p>
         </div>
       </div>
     </div>
