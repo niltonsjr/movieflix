@@ -1,17 +1,23 @@
 import Navbar from 'components/Navbar';
-import Login from 'pages/Login';
+import Auth from 'pages/Auth';
 import MovieCatalog from 'pages/MovieCatalog';
 import MovieDescription from 'pages/MovieDescription';
+import { Redirect } from 'react-router-dom';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 const Routes = () => (
   <BrowserRouter>
     <Navbar />
-    <Switch>
+    <Switch>    
+    <Redirect from="/" to="/auth/login" exact />   
       <Route path="/" exact>
-        <Login />
-      </Route>
+        <Auth />
+      </Route>  
+      <Redirect from="/auth" to="/auth/login" exact /> 
+      <Route path="/auth">
+        <Auth />
+      </Route>      
       <Route path="/movies" exact>
         <MovieCatalog />
       </Route>
