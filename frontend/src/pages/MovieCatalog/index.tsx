@@ -1,28 +1,28 @@
-import axios from 'axios';
 import MovieCard from 'components/MovieCard';
 import Pagination from 'components/Pagination';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Movie } from 'types/movie';
-import { AxiosParams } from 'types/vendor/axios';
 import { SpringPage } from 'types/vendor/spring';
-import { BASE_URL } from 'util/requests';
+import { requestBackend } from 'util/requests';
 import './styles.css';
+import { AxiosRequestConfig } from 'axios';
 
 const MovieCatalog = () => {
   const [page, setPage] = useState<SpringPage<Movie>>();
 
   useEffect(() => {
-    const params: AxiosParams = {
+    const params: AxiosRequestConfig = {
       method: 'GET',
-      url: `${BASE_URL}/movies`,
+      url: '/movies',
+      withCredentials: true,
       params: {
         page: 0,
         size: 12,
       },
     };
 
-    axios(params).then((response) => {
+    requestBackend(params).then((response) => {
       setPage(response.data);
     });
   }, []);

@@ -37,7 +37,7 @@
   font-size: 0.33em;
   font-weight: normal;
   padding: 13px 12px;
-  margin: 0px 17px 20px 17px;
+  margin: 0px 17px 0px 17px;
 }
 
 .login-card-container button {
@@ -46,6 +46,12 @@
   font-weight: bold;
   font-size: 0.4em;
   margin: 24px 17px auto 17px;
+}
+
+.invalid-feedback {
+  font-size: 0.3em;
+  margin: 0px 17px 15px 20px;
+  color: #FFC700;
 }
 
 @media (min-width: 992px) {
@@ -62,13 +68,18 @@
 
   .login-card-container input {
     width: 384px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
   }
 
   .login-card-container button {
     width: 384px;
     height: 65px;
     margin-top: 40px;
+  }
+  
+  .invalid-feedback {
+    font-size: 0.3em;
+    margin: 0px 17px 15px 20px;
   }
 }
 
