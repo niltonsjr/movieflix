@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import jwtDecode from 'jwt-decode';
 import qs from 'qs';
 import history from './history';
 
@@ -9,7 +10,14 @@ type LoginResponse = {
     scope: string,
     userName: string,
     userId: number
+}
 
+type Role = 'VISITOR' | 'MEMBER';
+
+type TokenData = {
+    exp: number;
+    user_name: string;
+    authorities: Role[];
 }
 
 export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8080";
@@ -75,8 +83,21 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    if(error.response.status === 401 || error.response.status === 403) {
+    if (error.response.status === 401 || error.response.status === 403) {
         history.push("/auth/login");
     }
     return Promise.reject(error);
 });
+
+export const getTokenData = (): TokenData | undefined => {
+    try {
+        return jwtDecode(getAuthData().access_token) as TokenData;
+    } catch (error) {
+        return undefined;
+    }
+}
+
+export const isAuthenticated = (): boolean => {
+    const tokenData = getTokenData();
+    return (tokenData && tokenData.exp * 1000 > Date.now()) ? true : false;
+}

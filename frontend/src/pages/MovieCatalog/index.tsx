@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Movie } from 'types/movie';
 import { SpringPage } from 'types/vendor/spring';
-import { requestBackend } from 'util/requests';
+import { isAuthenticated, requestBackend } from 'util/requests';
 import './styles.css';
 import { AxiosRequestConfig } from 'axios';
 
@@ -39,6 +39,7 @@ const MovieCatalog = () => {
           </select>
         </form>
       </div>
+      
       <div className="row catalog-movies-container">
         {page?.content.map((movie) => {
           return (
