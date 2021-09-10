@@ -43,8 +43,8 @@ const MovieCatalog = () => {
         {page?.content.map((movie) => {
           return (
             <div className="col-sm-6 col-lg-4 col-xl-3" key={movie.id}>
-              <Link to="/movies/1">
-                <MovieCard />
+              <Link to={`/movies/${movie.id}`}>
+                <MovieCard movie={movie}/>
               </Link>
             </div>
           );

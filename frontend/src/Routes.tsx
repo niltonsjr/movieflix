@@ -3,21 +3,19 @@ import Auth from 'pages/Auth';
 import MovieCatalog from 'pages/MovieCatalog';
 import MovieDescription from 'pages/MovieDescription';
 import { Redirect } from 'react-router-dom';
-
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import history from 'util/history';
 
 const Routes = () => (
-  <BrowserRouter>
+  <Router history={history}>
     <Navbar />
-    <Switch>    
-    <Redirect from="/" to="/auth/login" exact />   
+    <Switch>
       <Route path="/" exact>
-        <Auth />
-      </Route>  
-      <Redirect from="/auth" to="/auth/login" exact /> 
+        <MovieCatalog />
+      </Route>
       <Route path="/auth">
         <Auth />
-      </Route>      
+      </Route>
       <Route path="/movies" exact>
         <MovieCatalog />
       </Route>
@@ -25,7 +23,7 @@ const Routes = () => (
         <MovieDescription />
       </Route>
     </Switch>
-  </BrowserRouter>
+  </Router>
 );
 
 export default Routes;

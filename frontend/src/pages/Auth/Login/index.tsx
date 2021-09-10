@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
 import './styles.css';
@@ -11,6 +11,8 @@ type FormData = {
 const Login = () => {
   const { register, handleSubmit, formState: {errors} } = useForm<FormData>();
 
+  const history = useHistory();
+
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
     .then((response) => {
@@ -18,6 +20,7 @@ const Login = () => {
       const token = getAuthData().access_token;
       console.log('sucesso', response);
       console.log('token gerado: ' + token);
+      history.push('/movies');
     })
     .catch((error) => {
       console.log('Erro', error);
@@ -56,11 +59,11 @@ const Login = () => {
             className={`form-control base-input ${errors.password ? 'is-invalid' : ''}`}
           />
           <div className="invalid-feedback d-block">{errors.password?.message}</div>
-          <Link to="/movies">
+          
             <button className="btn btn-primary" type="submit">
               FAZER LOGIN
             </button>
-          </Link>
+          
         </form>
       </div>
     </div>
