@@ -1,7 +1,9 @@
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
+import { getTokenData, requestBackendLogin, saveAuthData } from 'util/requests';
 import './styles.css';
+import { useContext } from 'react';
+import { AuthContext } from 'AuthContext';
 
 type FormData = {
   username: string;
@@ -9,6 +11,9 @@ type FormData = {
 };
 
 const Login = () => {
+  
+  const { setAuthContextData } = useContext(AuthContext);
+
   const { register, handleSubmit, formState: {errors} } = useForm<FormData>();
 
   const history = useHistory();
@@ -17,9 +22,10 @@ const Login = () => {
     requestBackendLogin(formData)
     .then((response) => {
       saveAuthData(response.data);
-      const token = getAuthData().access_token;
-      console.log('sucesso', response);
-      console.log('token gerado: ' + token);
+      setAuthContextData({
+        authenticated: true,
+        tokenData: getTokenData(),
+      })
       history.push('/movies');
     })
     .catch((error) => {

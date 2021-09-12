@@ -2,7 +2,6 @@ import Navbar from 'components/Navbar';
 import Auth from 'pages/Auth';
 import MovieCatalog from 'pages/MovieCatalog';
 import MovieDescription from 'pages/MovieDescription';
-import { Redirect } from 'react-router-dom';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from 'util/history';
 

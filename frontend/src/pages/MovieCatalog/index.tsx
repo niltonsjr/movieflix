@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Movie } from 'types/movie';
 import { SpringPage } from 'types/vendor/spring';
-import { isAuthenticated, requestBackend } from 'util/requests';
+import { requestBackend } from 'util/requests';
 import './styles.css';
 import { AxiosRequestConfig } from 'axios';
 
