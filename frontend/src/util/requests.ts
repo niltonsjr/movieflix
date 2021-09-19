@@ -12,7 +12,7 @@ type LoginResponse = {
     userId: number
 }
 
-type Role = 'VISITOR' | 'MEMBER';
+type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
 
 export type TokenData = {
     exp: number;
