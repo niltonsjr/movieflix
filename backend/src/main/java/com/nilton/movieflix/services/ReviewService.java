@@ -1,5 +1,8 @@
 package com.nilton.movieflix.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,18 @@ public class ReviewService {
 
 	@Autowired
 	private AuthService authService;
+
+	@Transactional(readOnly = true)
+	public List<ReviewDTO> findAll() {
+		List<Review> lista = reviewRepository.findAll();
+		return lista.stream().map(x -> new ReviewDTO(x)).collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public List<ReviewDTO> findByMovieId(Long movieId) {
+		List<Review> lista = reviewRepository.findAllByMovieId(movieId);
+		return lista.stream().map(x -> new ReviewDTO(x)).collect(Collectors.toList());
+	}
 
 	@Transactional
 	public ReviewDTO insert(ReviewDTO dto) {

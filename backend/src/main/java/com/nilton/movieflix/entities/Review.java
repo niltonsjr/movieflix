@@ -16,11 +16,11 @@ import javax.persistence.Table;
 public class Review implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(columnDefinition = "TEXT")
 	private String text;
 
@@ -74,7 +74,7 @@ public class Review implements Serializable {
 	public void setMovie(Movie movie) {
 		this.movie = movie;
 	}
-	
+
 	public void setMovieId(Long id) {
 		this.movie.setId(id);
 	}

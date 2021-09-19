@@ -41,7 +41,7 @@ const Navbar = () => {
       <div>
         {authContextData.authenticated && (
           <Link to="/" className="nav-exit-buttom" onClick={handleLogoutClick}>
-            Salir
+            Sair
           </Link>
         )}
       </div>
