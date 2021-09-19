@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useContext } from 'react';
-import { getTokenData, isAuthenticated, removeAuthData } from 'util/requests';
+import { removeAuthData } from 'util/storage';
 import { AuthContext } from 'AuthContext';
 import history from 'util/history';
+import { getTokenData, isAuthenticated } from 'util/auth';
 import './styles.css';
-
 
 const Navbar = () => {
   const { authContextData, setAuthContextData } = useContext(AuthContext);

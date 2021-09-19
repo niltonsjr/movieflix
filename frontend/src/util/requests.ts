@@ -1,28 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import jwtDecode from 'jwt-decode';
+import { getAuthData } from './storage';
 import qs from 'qs';
 import history from './history';
 
-type LoginResponse = {
-    access_token: string,
-    token_type: string,
-    expires_in: number,
-    scope: string,
-    userName: string,
-    userId: number
-}
-
-type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
-
-export type TokenData = {
-    exp: number;
-    user_name: string;
-    authorities: Role[];
-}
-
 export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8080";
-
-const tokenKey = 'authData';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? 'movieflix';
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'movieflix123';
@@ -45,19 +26,6 @@ export const requestBackendLogin = (loginData: LoginData) => {
     })
 
     return axios({ method: 'POST', baseURL: BASE_URL, url: '/oauth/token', data, headers });
-}
-
-export const saveAuthData = (obj: LoginResponse) => {
-    localStorage.setItem(tokenKey, JSON.stringify(obj));
-}
-
-export const getAuthData = () => {
-    const str = localStorage.getItem(tokenKey) ?? "{}";
-    return JSON.parse(str) as LoginResponse;
-}
-
-export const removeAuthData = () => {
-    localStorage.removeItem(tokenKey);
 }
 
 export const requestBackend = (config: AxiosRequestConfig) => {
@@ -91,30 +59,3 @@ axios.interceptors.response.use(function (response) {
     }
     return Promise.reject(error);
 });
-
-export const getTokenData = (): TokenData | undefined => {
-    try {
-        return jwtDecode(getAuthData().access_token) as TokenData;
-    } catch (error) {
-        return undefined;
-    }
-}
-
-export const isAuthenticated = (): boolean => {
-    const tokenData = getTokenData();
-    return (tokenData && tokenData.exp * 1000 > Date.now()) ? true : false;
-}
-
-export const hasAnyRoles = (roles: Role[]): boolean => {
-    if (roles.length === 0) {
-        return true;
-    }
-
-    const tokenData = getTokenData();
-
-    if (tokenData !== undefined) {
-        return roles.some(role => tokenData.authorities.includes(role));
-    }
-
-    return false;
-}

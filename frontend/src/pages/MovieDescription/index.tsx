@@ -1,6 +1,6 @@
 import MovieDetails from 'components/MovieDetails';
 import UserReview from 'components/UserReview';
-import { hasAnyRoles } from 'util/requests';
+import { hasAnyRoles } from 'util/auth';
 
 import './styles.css';
 
