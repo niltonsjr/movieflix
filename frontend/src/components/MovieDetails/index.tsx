@@ -1,32 +1,12 @@
-import { AxiosRequestConfig } from 'axios';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 import { Movie } from 'types/movie';
-import { requestBackend } from 'util/requests';
 
 import './styles.css';
 
-type UrlParams = {
-  movieId: string;
-};
+type Props = {
+  movie?: Movie;
+}
 
-const MovieDetails = () => {
-  const { movieId } = useParams<UrlParams>();
-
-  const [movie, setMovie] = useState<Movie>();
-
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/movies/${movieId}`,
-      withCredentials: true,
-    };
-
-    requestBackend(params).then((response) => {
-      setMovie(response.data);
-    });
-  }, [movieId]);
-
+const MovieDetails = ({movie}: Props) => {
   return (
     <div className="base-card details-card-container">
       <div className="details-image-container">
