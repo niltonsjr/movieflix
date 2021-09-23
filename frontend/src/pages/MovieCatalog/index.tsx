@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { Movie } from 'types/movie';
 import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'util/requests';
-import './styles.css';
 import { AxiosRequestConfig } from 'axios';
+import './styles.css';
 
 const MovieCatalog = () => {
   const [page, setPage] = useState<SpringPage<Movie>>();
