@@ -26,7 +26,7 @@ const MovieDescription = () => {
   const { movieId } = useParams<UrlParams>();
   const [movie, setMovie] = useState<Movie>();
   const [review, setReview] = useState<Review[]>([]);
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, reset } = useForm<FormData>();
 
   useEffect(() => {
     const params1: AxiosRequestConfig = {
@@ -56,7 +56,7 @@ const MovieDescription = () => {
       .catch((error) => {
         console.log('Erro en get reviews', error);
       });
-  }, [movieId]);
+  }, [movieId, review]);
 
   const onSubmit = (formData: FormData) => {
     const params: AxiosRequestConfig = {
@@ -73,6 +73,7 @@ const MovieDescription = () => {
     requestBackend(params)
       .then((response) => {
         console.log('sucesso', response);
+        reset({});
       })
       .catch((error) => {
         console.log('erro', error);
