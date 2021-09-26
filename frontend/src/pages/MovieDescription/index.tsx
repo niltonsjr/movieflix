@@ -20,7 +20,7 @@ const MovieDescription = () => {
   const { authContextData } = useContext(AuthContext);
   const { movieId } = useParams<UrlParams>();
   const [movie, setMovie] = useState<Movie>();
-  
+
   const {
     register,
     handleSubmit,
@@ -42,8 +42,6 @@ const MovieDescription = () => {
       .catch((error) => {
         console.log('Erro en get movies', error);
       });
-
-
   }, [movie, movieId]);
 
   const onSubmit = (formData: Review) => {

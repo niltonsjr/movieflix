@@ -6,10 +6,15 @@ import { Movie } from 'types/movie';
 import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'util/requests';
 import { AxiosRequestConfig } from 'axios';
+import Select from 'react-select';
 import './styles.css';
+import { Genre } from 'types/genre';
+
 
 const MovieCatalog = () => {
   const [page, setPage] = useState<SpringPage<Movie>>();
+
+  const [selectGenres, setSelectGenres] = useState<Genre[]>([]);
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
@@ -27,16 +32,31 @@ const MovieCatalog = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: '/genres/',
+      withCredentials: true,
+    };
+
+    requestBackend(params).then((response) => {
+      setSelectGenres(response.data);
+    });
+  }, []);
+
   return (
     <div className="container my-4 catalog-container">
       <div className="row catalog-filter-container base-card">
         <form>
-          <select id="movies" name="movies">
-            <option value="aventura">Aventura</option>
-            <option value="comedia">Comedia</option>
-            <option value="accion">Acción</option>
-            <option value="drama">Drama</option>
-          </select>
+          <Select 
+            options={selectGenres}
+            classNamePrefix="catalog-filter-container"
+            placeholder="Género"
+            isMulti
+            getOptionLabel={(genre: Genre) => genre.name}
+            getOptionValue={(genre: Genre) => String(genre.id)} 
+          />
+
         </form>
       </div>
       
