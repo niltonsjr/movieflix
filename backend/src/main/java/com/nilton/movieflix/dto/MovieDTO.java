@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.nilton.movieflix.entities.Genre;
 import com.nilton.movieflix.entities.Movie;
+import com.nilton.movieflix.entities.Review;
 
 public class MovieDTO implements Serializable {
 
@@ -46,6 +47,11 @@ public class MovieDTO implements Serializable {
 		genre = new GenreDTO(entity.getGenre());
 	}
 
+	public MovieDTO(Movie entity, List<Review> reviews) {
+		this(entity);
+		reviews.forEach(rev -> this.reviews.add(new ReviewDTO(rev)));
+	}
+	
 	public Long getId() {
 		return id;
 	}

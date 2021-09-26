@@ -10,32 +10,32 @@ import { requestBackend } from 'util/requests';
 import { Review } from 'types/review';
 import { useContext } from 'react';
 import { AuthContext } from 'AuthContext';
-
 import './styles.css';
 
 type UrlParams = {
   movieId: string;
 };
 
-type FormData = {
-  reviewText: string;
-};
-
 const MovieDescription = () => {
   const { authContextData } = useContext(AuthContext);
   const { movieId } = useParams<UrlParams>();
   const [movie, setMovie] = useState<Movie>();
-  const [review, setReview] = useState<Review[]>([]);
-  const { register, handleSubmit, reset } = useForm<FormData>();
+  
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Review>();
 
   useEffect(() => {
-    const params1: AxiosRequestConfig = {
+    const config1: AxiosRequestConfig = {
       method: 'GET',
       url: `/movies/${movieId}`,
       withCredentials: true,
     };
 
-    requestBackend(params1)
+    requestBackend(config1)
       .then((response) => {
         setMovie(response.data);
       })
@@ -43,34 +43,22 @@ const MovieDescription = () => {
         console.log('Erro en get movies', error);
       });
 
-    const params2: AxiosRequestConfig = {
-      method: 'GET',
-      url: `/reviews/${movieId}`,
-      withCredentials: true,
-    };
-    
-    requestBackend(params2)
-      .then((response) => {
-        setReview(response.data);
-      })
-      .catch((error) => {
-        console.log('Erro en get reviews', error);
-      });
-  }, [movieId, review]);
 
-  const onSubmit = (formData: FormData) => {
-    const params: AxiosRequestConfig = {
+  }, [movie, movieId]);
+
+  const onSubmit = (formData: Review) => {
+    const config: AxiosRequestConfig = {
       method: 'POST',
       url: '/reviews',
       withCredentials: true,
       data: {
         id: authContextData.tokenData?.userId,
         movieId: movieId,
-        text: formData.reviewText,
+        text: formData.text,
       },
     };
 
-    requestBackend(params)
+    requestBackend(config)
       .then((response) => {
         console.log('sucesso', response);
         reset({});
@@ -86,15 +74,21 @@ const MovieDescription = () => {
         <MovieDetails movie={movie} />
       </div>
 
-      { hasAnyRoles(['ROLE_MEMBER']) && (
+      {hasAnyRoles(['ROLE_MEMBER']) && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="movie-review-container base-card">
             <input
-              {...register('reviewText')}
+              {...register('text', { required: 'Campo obrigatorio' })}
               type="text"
               placeholder="Deixe sua avaliação aqui"
-              name="reviewText"
+              name="text"
+              className={`form-control base-input ${
+                errors.text ? 'is-invalid' : ''
+              }`}
             />
+            <div className="invalid-review-feedback d-block">
+              {errors.text?.message}
+            </div>
             <button className="form-btn btn btn-primary" type="submit">
               SALVAR AVALIAÇÃO
             </button>
@@ -103,11 +97,16 @@ const MovieDescription = () => {
       )}
 
       <div className="movie-reviewlist-container base-card">
-        {review.map((review) => {
-          return <UserReview text={review.text} userName={review.user.name} />;
+        {movie?.reviews.map((review) => {
+          return (
+            <UserReview
+              text={review.text}
+              userName={review.user.name}
+              key={review.id}
+            />
+          );
         })}
       </div>
-      
     </div>
   );
 };

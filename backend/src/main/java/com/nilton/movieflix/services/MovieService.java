@@ -20,22 +20,22 @@ public class MovieService {
 
 	@Autowired
 	private MovieRepository movieRepository;
-	
+
 	@Autowired
 	private GenreRepository genreRepository;
-		
+
 	@Transactional(readOnly = true)
 	public Page<MovieDTO> findAllPaged(Long genreId, PageRequest pageRequest) {
 		Genre genre = genreId == 0 ? null : genreRepository.getOne(genreId);
 		Page<Movie> list = movieRepository.findAllPaged(genre, pageRequest);
 		return list.map(x -> new MovieDTO(x));
 	}
-	
+
 	@Transactional(readOnly = true)
 	public MovieDTO findById(Long id) {
 		Optional<Movie> obj = movieRepository.findById(id);
 		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("No se ha localizado la entidad"));
-		return new MovieDTO(entity);
+		return new MovieDTO(entity, entity.getReviews());
 	}
-	
+
 }

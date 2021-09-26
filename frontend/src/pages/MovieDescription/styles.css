@@ -32,6 +32,12 @@
   padding: 3px 10px 28px;
 }
 
+.invalid-review-feedback {
+  font-size: 0.9em;
+  margin: 5px 17px 0 20px;
+  color: #FFC700;
+}
+
 @media (min-width: 576px) {
   .movie-review-container {
     padding: 20px;
