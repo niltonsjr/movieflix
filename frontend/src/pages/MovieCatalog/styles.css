@@ -32,6 +32,11 @@
   color: #fff !important; 
 }
 
+.catalog-filter-container__single-value {
+  color: #fff !important; 
+}
+
+
 .catalog-filter-container__option {
   background: #6c6c6c !important; 
   font-size: 0.65em !important; 
@@ -43,6 +48,10 @@
 
 .catalog-filter-container__multi-value__label {
   color: #fff !important; 
+}
+
+.catalog-filter-container__indicator-separator {
+  display: none;
 }
 
 .catalog-movies-container {
