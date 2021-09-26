@@ -13,36 +13,45 @@ import './styles.css';
 
 type ControlComponentsData = {
   activePage: number;
-}
+};
 
 const MovieCatalog = () => {
   const [page, setPage] = useState<SpringPage<Movie>>();
 
   const [selectGenre, setSelectGenre] = useState<Genre[]>([]);
 
-  const [controlComponentsData, setControlComponentsData] = useState<ControlComponentsData>({
-    activePage: 0
-  })
+  const [controlComponentsData, setControlComponentsData] =
+    useState<ControlComponentsData>({
+      activePage: 0,
+    });
 
   const { handleSubmit, control } = useForm<Genre>();
 
   useEffect(() => {
+    getMovies(0);
+  }, []);
+
+  useEffect(() => {
+    getGenres();
+  }, []);
+
+  const getMovies = (pageNumber: number) => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: '/movies',
       withCredentials: true,
       params: {
-        page: 0,
-        size: 12,
+        page: pageNumber,
+        linesPerPage: 4,
       },
     };
 
     requestBackend(params).then((response) => {
       setPage(response.data);
     });
-  }, []);
+  };
 
-  useEffect(() => {
+  const getGenres = () => {
     const params: AxiosRequestConfig = {
       method: 'GET',
       url: '/genres/',
@@ -52,7 +61,7 @@ const MovieCatalog = () => {
     requestBackend(params).then((response) => {
       setSelectGenre(response.data);
     });
-  }, []);
+  }
 
   const onSubmit = (formData: Genre) => {
     const params: AxiosRequestConfig = {
@@ -61,7 +70,7 @@ const MovieCatalog = () => {
       withCredentials: true,
       params: {
         page: 0,
-        size: 12,
+        size: 5,
         genreId: formData.id,
       },
     };
@@ -96,7 +105,11 @@ const MovieCatalog = () => {
           );
         })}
       </div>
-      <Pagination />
+      <Pagination
+        pageCount={page ? page?.totalPages : 0}
+        range={3}
+        onChange={getMovies}
+      />
     </div>
   );
 };

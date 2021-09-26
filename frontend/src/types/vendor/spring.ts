@@ -3,7 +3,7 @@ export type SpringPage<T> = {
     last: boolean;
     totalElements: number;
     totalPages: number;
-    size: number;
+    linesPerPage: number;
     number: number;
     first: boolean;
     numberOfElements?: number;
