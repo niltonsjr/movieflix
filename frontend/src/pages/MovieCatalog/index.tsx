@@ -25,7 +25,7 @@ const MovieCatalog = () => {
       activePage: 0,
     });
 
-  const { handleSubmit, control } = useForm<Genre>();
+  const { handleSubmit, control, setValue } = useForm<Genre>();
 
   const getMovies = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -34,14 +34,14 @@ const MovieCatalog = () => {
       withCredentials: true,
       params: {
         page: controlComponentsData.activePage,
-        linesPerPage: 4,
+        size: 4,
       },
     };
 
     requestBackend(params).then((response) => {
       setPage(response.data);
     });
-  },[controlComponentsData.activePage]);
+  }, [controlComponentsData.activePage]);
 
   useEffect(() => {
     getMovies();
@@ -50,8 +50,6 @@ const MovieCatalog = () => {
   useEffect(() => {
     getGenres();
   }, []);
-
-
 
   const getGenres = () => {
     const params: AxiosRequestConfig = {
@@ -66,8 +64,8 @@ const MovieCatalog = () => {
   };
 
   const handlePageChange = (pageNumber: number) => {
-    setControlComponentsData({activePage: pageNumber})
-  }
+    setControlComponentsData({ activePage: pageNumber });
+  };
 
   const onSubmit = (formData: Genre) => {
     const params: AxiosRequestConfig = {
@@ -82,20 +80,33 @@ const MovieCatalog = () => {
     };
 
     requestBackend(params).then((response) => {
-      setPage(response.data);
+      setPage(response.data);      
     });
   };
+
+  const handleChangeGenre = (value : number) => {
+    setValue('id', value);
+    console.log("enviou", value);
+  }
 
   return (
     <div className="container my-4 catalog-container">
       <div className="row catalog-filter-container base-card">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Select
-            options={selectGenre}
-            classNamePrefix="catalog-filter-container"
-            placeholder="Género"
-            getOptionLabel={(genre: Genre) => genre.name}
-            getOptionValue={(genre: Genre) => String(genre.id)}
+          <Controller
+            name="id"
+            control={control}
+            render={({ field }) => (
+              <Select
+                options={selectGenre}
+                classNamePrefix="catalog-filter-container"
+                placeholder="Género"
+                isClearable    
+                onChange={value => handleChangeGenre(value as unknown as number )}            
+                getOptionLabel={(genre: Genre) => genre.name}
+                getOptionValue={(genre: Genre) => String(genre.id)}
+              />
+            )}
           />
         </form>
       </div>
