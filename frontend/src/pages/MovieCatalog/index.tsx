@@ -6,26 +6,22 @@ import { Movie } from 'types/movie';
 import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'util/requests';
 import { AxiosRequestConfig } from 'axios';
-import Select from 'react-select';
-import { Genre } from 'types/genre';
-import { useForm, Controller } from 'react-hook-form';
+import MovieFilter, { MovieFilterData } from 'components/MovieFilter';
 import './styles.css';
 
 type ControlComponentsData = {
   activePage: number;
+  filterData: MovieFilterData;
 };
 
 const MovieCatalog = () => {
   const [page, setPage] = useState<SpringPage<Movie>>();
 
-  const [selectGenre, setSelectGenre] = useState<Genre[]>([]);
-
   const [controlComponentsData, setControlComponentsData] =
     useState<ControlComponentsData>({
       activePage: 0,
+      filterData: { genre: null },
     });
-
-  const { handleSubmit, control, setValue } = useForm<Genre>();
 
   const getMovies = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -34,82 +30,40 @@ const MovieCatalog = () => {
       withCredentials: true,
       params: {
         page: controlComponentsData.activePage,
-        size: 4,
+        size: 6,
+        genreId: controlComponentsData.filterData.genre?.id,
       },
     };
 
     requestBackend(params).then((response) => {
       setPage(response.data);
     });
-  }, [controlComponentsData.activePage]);
+  }, [
+    controlComponentsData.activePage,
+    controlComponentsData.filterData.genre?.id,
+  ]);
 
   useEffect(() => {
     getMovies();
   }, [getMovies]);
 
-  useEffect(() => {
-    getGenres();
-  }, []);
-
-  const getGenres = () => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: '/genres/',
-      withCredentials: true,
-    };
-
-    requestBackend(params).then((response) => {
-      setSelectGenre(response.data);
-    });
-  };
-
   const handlePageChange = (pageNumber: number) => {
-    setControlComponentsData({ activePage: pageNumber });
-  };
-
-  const onSubmit = (formData: Genre) => {
-    const params: AxiosRequestConfig = {
-      method: 'GET',
-      url: '/movies',
-      withCredentials: true,
-      params: {
-        page: 0,
-        size: 5,
-        genreId: formData.id,
-      },
-    };
-
-    requestBackend(params).then((response) => {
-      setPage(response.data);      
+    setControlComponentsData({
+      activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
     });
   };
 
-  const handleChangeGenre = (value : number) => {
-    setValue('id', value);
-    console.log("enviou", value);
-  }
+  const handleSubmitFilter = (data: MovieFilterData) => {
+    setControlComponentsData({
+      activePage: 0,
+      filterData: data,
+    });
+  };
 
   return (
     <div className="container my-4 catalog-container">
-      <div className="row catalog-filter-container base-card">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="id"
-            control={control}
-            render={({ field }) => (
-              <Select
-                options={selectGenre}
-                classNamePrefix="catalog-filter-container"
-                placeholder="Género"
-                isClearable    
-                onChange={value => handleChangeGenre(value as unknown as number )}            
-                getOptionLabel={(genre: Genre) => genre.name}
-                getOptionValue={(genre: Genre) => String(genre.id)}
-              />
-            )}
-          />
-        </form>
-      </div>
+      <MovieFilter onSubmitFilter={handleSubmitFilter} />
 
       <div className="row catalog-movies-container">
         {page?.content.map((movie) => {
@@ -122,7 +76,9 @@ const MovieCatalog = () => {
           );
         })}
       </div>
+
       <Pagination
+        forcePage={page?.number}
         pageCount={page ? page?.totalPages : 0}
         range={3}
         onChange={handlePageChange}
