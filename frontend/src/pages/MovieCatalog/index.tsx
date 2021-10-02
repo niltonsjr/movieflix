@@ -30,7 +30,7 @@ const MovieCatalog = () => {
       withCredentials: true,
       params: {
         page: controlComponentsData.activePage,
-        size: 6,
+        size: 4,
         genreId: controlComponentsData.filterData.genre?.id,
       },
     };

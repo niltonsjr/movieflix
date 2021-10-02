@@ -10,6 +10,7 @@ import { requestBackend } from 'util/requests';
 import { Review } from 'types/review';
 import { useContext } from 'react';
 import { AuthContext } from 'AuthContext';
+import { toast } from 'react-toastify';
 import './styles.css';
 
 type UrlParams = {
@@ -59,6 +60,7 @@ const MovieDescription = () => {
     requestBackend(config)
       .then((response) => {
         console.log('sucesso', response);
+        toast.success('Avaliação salvada.', {theme: "colored"});
         reset({});
       })
       .catch((error) => {
@@ -80,7 +82,7 @@ const MovieDescription = () => {
               type="text"
               placeholder="Deixe sua avaliação aqui"
               name="text"
-              className={`form-control base-input ${
+              className={`base-input bg-white text-dark ${
                 errors.text ? 'is-invalid' : ''
               }`}
             />
