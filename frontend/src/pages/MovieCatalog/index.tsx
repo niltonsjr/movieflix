@@ -7,7 +7,9 @@ import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'util/requests';
 import { AxiosRequestConfig } from 'axios';
 import MovieFilter, { MovieFilterData } from 'components/MovieFilter';
+import CatalogLoader from './CatalogLoader';
 import './styles.css';
+
 
 type ControlComponentsData = {
   activePage: number;
@@ -15,6 +17,8 @@ type ControlComponentsData = {
 };
 
 const MovieCatalog = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [page, setPage] = useState<SpringPage<Movie>>();
 
   const [controlComponentsData, setControlComponentsData] =
@@ -34,10 +38,14 @@ const MovieCatalog = () => {
         genreId: controlComponentsData.filterData.genre?.id,
       },
     };
-
-    requestBackend(params).then((response) => {
-      setPage(response.data);
-    });
+    setIsLoading(true);
+    requestBackend(params)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [
     controlComponentsData.activePage,
     controlComponentsData.filterData.genre?.id,
@@ -66,7 +74,8 @@ const MovieCatalog = () => {
       <MovieFilter onSubmitFilter={handleSubmitFilter} />
 
       <div className="row catalog-movies-container">
-        {page?.content.map((movie) => {
+        {isLoading ? <CatalogLoader /> : (
+          page?.content.map((movie) => {
           return (
             <div className="col-sm-6 col-lg-4 col-xl-3" key={movie.id}>
               <Link to={`/movies/${movie.id}`}>
@@ -74,7 +83,7 @@ const MovieCatalog = () => {
               </Link>
             </div>
           );
-        })}
+        }))}
       </div>
 
       <Pagination
