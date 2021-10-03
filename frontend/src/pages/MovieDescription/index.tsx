@@ -3,7 +3,7 @@ import MovieDetails from 'components/MovieDetails';
 import UserReview from 'components/UserReview';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Movie } from 'types/movie';
 import { hasAnyRoles } from 'util/auth';
 import { requestBackend } from 'util/requests';
@@ -21,7 +21,6 @@ const MovieDescription = () => {
   const { authContextData } = useContext(AuthContext);
   const { movieId } = useParams<UrlParams>();
   const [movie, setMovie] = useState<Movie>();
-
   const {
     register,
     handleSubmit,
@@ -29,7 +28,7 @@ const MovieDescription = () => {
     formState: { errors },
   } = useForm<Review>();
 
-  useEffect(() => {
+  const getMovies = useCallback(() => {
     const config1: AxiosRequestConfig = {
       method: 'GET',
       url: `/movies/${movieId}`,
@@ -43,7 +42,11 @@ const MovieDescription = () => {
       .catch((error) => {
         console.log('Erro en get movies', error);
       });
-  }, [movie, movieId]);
+  }, [movieId]);
+
+  useEffect(() => {
+    getMovies();
+  }, [getMovies]);
 
   const onSubmit = (formData: Review) => {
     const config: AxiosRequestConfig = {
@@ -60,8 +63,9 @@ const MovieDescription = () => {
     requestBackend(config)
       .then((response) => {
         console.log('sucesso', response);
-        toast.success('Avaliação salvada.', {theme: "colored"});
+        toast.success('Avaliação salvada.', { theme: 'colored' });
         reset({});
+        getMovies();
       })
       .catch((error) => {
         console.log('erro', error);
