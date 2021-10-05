@@ -11,6 +11,7 @@ import { Review } from 'types/review';
 import { useContext } from 'react';
 import { AuthContext } from 'AuthContext';
 import { toast } from 'react-toastify';
+import ImageLoader from 'components/MovieDetails/ImageLoader';
 import './styles.css';
 
 type UrlParams = {
@@ -18,6 +19,7 @@ type UrlParams = {
 };
 
 const MovieDescription = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { authContextData } = useContext(AuthContext);
   const { movieId } = useParams<UrlParams>();
   const [movie, setMovie] = useState<Movie>();
@@ -35,12 +37,16 @@ const MovieDescription = () => {
       withCredentials: true,
     };
 
+    setIsLoading(true);
     requestBackend(config1)
       .then((response) => {
         setMovie(response.data);
       })
       .catch((error) => {
         console.log('Erro en get movies', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [movieId]);
 
@@ -62,7 +68,6 @@ const MovieDescription = () => {
 
     requestBackend(config)
       .then((response) => {
-        console.log('sucesso', response);
         toast.success('Avaliação salvada.', { theme: 'colored' });
         reset({});
         getMovies();
@@ -74,43 +79,49 @@ const MovieDescription = () => {
 
   return (
     <div className="container my-4">
-      <div className="movie-description-container">
-        <MovieDetails movie={movie} />
-      </div>
-
-      {hasAnyRoles(['ROLE_MEMBER']) && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="movie-review-container base-card">
-            <input
-              {...register('text', { required: 'Campo obrigatorio' })}
-              type="text"
-              placeholder="Deixe sua avaliação aqui"
-              name="text"
-              className={`base-input bg-white text-dark ${
-                errors.text ? 'is-invalid' : ''
-              }`}
-            />
-            <div className="invalid-review-feedback d-block">
-              {errors.text?.message}
-            </div>
-            <button className="form-btn btn btn-primary" type="submit">
-              SALVAR AVALIAÇÃO
-            </button>
+      {isLoading ? (
+        <ImageLoader />
+      ) : (
+        <>
+          <div className="movie-description-container">
+            <MovieDetails movie={movie} />
           </div>
-        </form>
-      )}
 
-      <div className="movie-reviewlist-container base-card">
-        {movie?.reviews.map((review) => {
-          return (
-            <UserReview
-              text={review.text}
-              userName={review.user.name}
-              key={review.id}
-            />
-          );
-        })}
-      </div>
+          {hasAnyRoles(['ROLE_MEMBER']) && (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="movie-review-container base-card">
+                <input
+                  {...register('text', { required: 'Campo obrigatorio' })}
+                  type="text"
+                  placeholder="Deixe sua avaliação aqui"
+                  name="text"
+                  className={`base-input bg-white text-dark ${
+                    errors.text ? 'is-invalid' : ''
+                  }`}
+                />
+                <div className="invalid-review-feedback d-block">
+                  {errors.text?.message}
+                </div>
+                <button className="form-btn btn btn-primary" type="submit">
+                  SALVAR AVALIAÇÃO
+                </button>
+              </div>
+            </form>
+          )}
+
+          <div className="movie-reviewlist-container base-card">
+            {movie?.reviews.map((review) => {
+              return (
+                <UserReview
+                  text={review.text}
+                  userName={review.user.name}
+                  key={review.id}
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 };

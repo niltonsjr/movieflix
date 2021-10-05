@@ -1,12 +1,11 @@
 import { Movie } from 'types/movie';
-
 import './styles.css';
 
 type Props = {
   movie?: Movie;
-}
+};
 
-const MovieDetails = ({movie}: Props) => {
+const MovieDetails = ({ movie }: Props) => {
   return (
     <div className="base-card details-card-container">
       <div className="details-image-container">
