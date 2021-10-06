@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useContext } from 'react';
-import { removeAuthData } from 'util/storage';
-import { AuthContext } from 'AuthContext';
-import history from 'util/history';
-import { getTokenData, isAuthenticated } from 'util/auth';
-import './styles.css';
+import { Link } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import { removeAuthData } from "util/storage";
+import { AuthContext } from "AuthContext";
+import history from "util/history";
+import { isAuthenticated } from "util/auth";
+import { getTokenData } from "util/token";
+import "./styles.css";
 
 const Navbar = () => {
   const { authContextData, setAuthContextData } = useContext(AuthContext);
@@ -28,7 +29,7 @@ const Navbar = () => {
     setAuthContextData({
       authenticated: isAuthenticated(),
     });
-    history.replace('/auth/login');
+    history.replace("/auth/login");
   };
 
   return (

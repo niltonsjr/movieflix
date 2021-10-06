@@ -1,12 +1,11 @@
-import { useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { useContext } from 'react';
-import { AuthContext } from 'AuthContext';
-import { requestBackendLogin } from 'util/requests';
-import { saveAuthData } from 'util/storage';
-import { getTokenData } from 'util/auth';
-
-import './styles.css';
+import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "AuthContext";
+import { requestBackendLogin } from "util/requests";
+import { saveAuthData } from "util/storage";
+import { getTokenData } from "util/token";
+import "./styles.css";
 
 type CredentialsDTO = {
   username: string;
@@ -32,10 +31,10 @@ const Login = () => {
           authenticated: true,
           tokenData: getTokenData(),
         });
-        history.push('/movies');
+        history.push("/movies");
       })
       .catch((error) => {
-        console.log('Erro', error);
+        console.log("Erro", error);
       });
   };
 
@@ -48,32 +47,32 @@ const Login = () => {
           className="login-form-container"
         >
           <input
-            {...register('username', {
-              required: 'Campo obrigatorio',
+            {...register("username", {
+              required: "Campo obrigatorio",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Email inválido',
+                message: "Email inválido",
               },
             })}
             type="text"
             name="username"
             placeholder="Email"
             className={`form-control base-input ${
-              errors.username ? 'is-invalid' : ''
+              errors.username ? "is-invalid" : ""
             }`}
           />
           <div className="invalid-feedback d-block">
             {errors.username?.message}
           </div>
           <input
-            {...register('password', {
-              required: 'Campo obrigatorio',
+            {...register("password", {
+              required: "Campo obrigatorio",
             })}
             type="password"
             name="password"
             placeholder="Senha"
             className={`form-control base-input ${
-              errors.password ? 'is-invalid' : ''
+              errors.password ? "is-invalid" : ""
             }`}
           />
           <div className="invalid-feedback d-block">

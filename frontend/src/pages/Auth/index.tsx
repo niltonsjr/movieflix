@@ -1,6 +1,5 @@
 import { ReactComponent as MainImage } from 'assets/images/main-image.svg';
 import Login from 'pages/Auth/Login';
-
 import { Route, Switch } from 'react-router-dom';
 import './styles.css';
 
