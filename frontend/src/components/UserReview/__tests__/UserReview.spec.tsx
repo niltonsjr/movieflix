@@ -10,5 +10,5 @@ test("MovieDetails should render card with given movie", () => {
 
   expect(screen.getByText(review)).toBeInTheDocument();
   expect(screen.getByText(userName)).toBeInTheDocument();
-  expect(screen.getByAltText(altImageText)).toBeInTheDocument();
+  expect(screen.getByTestId("star")).toBeInTheDocument();
 });

@@ -11,7 +11,7 @@ const UserReview = ({ text, userName }: Props) => {
   return (
     <div className="review-container">
       <div className="username-container">
-        <img src={Star} alt="estrela" />
+        <img src={Star} alt="estrela" data-testid="star" />
         <h1>{userName}</h1>
       </div>
       <div className="review-content-container">
