@@ -10,7 +10,6 @@ import MovieFilter, { MovieFilterData } from 'components/MovieFilter';
 import CatalogLoader from './CatalogLoader';
 import './styles.css';
 
-
 type ControlComponentsData = {
   activePage: number;
   filterData: MovieFilterData;
@@ -70,20 +69,20 @@ const MovieCatalog = () => {
   };
 
   return (
-    <div className="container my-4 catalog-container">
+    <div className="container my-4 catalog-container" data-testid="catalog">
       <MovieFilter onSubmitFilter={handleSubmitFilter} />
 
       <div className="row catalog-movies-container">
         {isLoading ? <CatalogLoader /> : (
           page?.content.map((movie) => {
-          return (
-            <div className="col-sm-6 col-lg-4 col-xl-3" key={movie.id}>
-              <Link to={`/movies/${movie.id}`}>
-                <MovieCard movie={movie} />
-              </Link>
-            </div>
-          );
-        }))}
+            return (
+              <div className="col-sm-6 col-lg-4 col-xl-3" key={movie.id}>
+                <Link to={`/movies/${movie.id}`}>
+                  <MovieCard movie={movie} />
+                </Link>
+              </div>
+            );
+          }))}
       </div>
 
       <Pagination
