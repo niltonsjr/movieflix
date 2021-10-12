@@ -25,8 +25,8 @@ const Pagination = ({ pageCount, range, onChange, forcePage } : Props) => {
       disabledClassName="arrow-inactive"  
          
 
-      previousLabel={<div className="pagination-arrow-container"><ArrowIcon /></div>}
-      nextLabel={<div className="pagination-arrow-container"><ArrowIcon /></div>}
+      previousLabel={<div className="pagination-arrow-container" data-testid="previous-arrow"><ArrowIcon /></div>}
+      nextLabel={<div className="pagination-arrow-container" data-testid="next-arrow"><ArrowIcon /></div>}
 
       onPageChange={(items) => (onChange) ? onChange(items.selected) : {}}
       forcePage={forcePage} 

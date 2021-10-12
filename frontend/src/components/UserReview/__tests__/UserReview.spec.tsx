@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import UserReview from "..";
 
-test("MovieDetails should render card with given movie", () => {
+test("UserReview should render review text and username.", () => {
   const review = "This is the user review";
   const userName = "Ana Blanco";
   const altImageText = "estrela";
