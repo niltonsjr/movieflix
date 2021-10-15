@@ -41,6 +41,9 @@ const MovieFilter = ({ onSubmitFilter }: Props) => {
   return (
     <div className="row catalog-filter-container base-card">
       <form>
+        <label htmlFor="genre" className="d-none">
+          Género
+        </label>
         <Controller
           name="genre"
           control={control}
@@ -53,6 +56,7 @@ const MovieFilter = ({ onSubmitFilter }: Props) => {
               onChange={(value) => handleChangeGenre(value as Genre)}
               getOptionLabel={(genre: Genre) => genre.name}
               getOptionValue={(genre: Genre) => String(genre.id)}
+              inputId="genre"
             />
           )}
         />
