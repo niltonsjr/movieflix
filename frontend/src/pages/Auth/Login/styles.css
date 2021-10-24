@@ -38,6 +38,16 @@
   font-weight: normal;
   padding: 13px 12px;
   margin: 0px 17px 0px 17px;
+  color: #525252;
+}
+
+.login-card-container input::placeholder {
+  color: #525252;
+  opacity: 1; /* Firefox */
+}
+
+.login-card-container input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #525252;
 }
 
 .login-card-container button {

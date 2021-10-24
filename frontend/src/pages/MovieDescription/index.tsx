@@ -90,6 +90,9 @@ const MovieDescription = () => {
           {hasAnyRoles(['ROLE_MEMBER']) && (
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="movie-review-container base-card">
+                <label htmlFor="text" className="d-none">
+                  Review
+                </label>
                 <input
                   {...register('text', { required: 'Campo obrigatorio' })}
                   type="text"

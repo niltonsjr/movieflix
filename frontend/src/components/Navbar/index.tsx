@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-primary main-nav">
       <div>
-        <Link to="/" className="nav-text-logo">
+        <Link to={authContextData.authenticated ? "/movies" : "/" } className="nav-text-logo">
           MovieFlix
         </Link>
       </div>

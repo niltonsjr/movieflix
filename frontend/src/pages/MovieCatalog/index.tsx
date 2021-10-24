@@ -73,7 +73,9 @@ const MovieCatalog = () => {
       <MovieFilter onSubmitFilter={handleSubmitFilter} />
 
       <div className="row catalog-movies-container">
-        {isLoading ? <CatalogLoader /> : (
+        {isLoading ? (
+          <CatalogLoader />
+        ) : (
           page?.content.map((movie) => {
             return (
               <div className="col-sm-6 col-lg-4 col-xl-3" key={movie.id}>
@@ -82,7 +84,8 @@ const MovieCatalog = () => {
                 </Link>
               </div>
             );
-          }))}
+          })
+        )}
       </div>
 
       <Pagination

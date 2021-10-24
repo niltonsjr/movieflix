@@ -1,5 +1,4 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import MovieCatalog from '..';
 import history from 'util/history';

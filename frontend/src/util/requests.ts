@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getAuthData } from './storage';
 import qs from 'qs';
-import history from './history';
+import { toast } from 'react-toastify';
 
 export const BASE_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8080";
 
@@ -43,6 +43,7 @@ axios.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     // Do something with request error
+    toast.error("Erro de conexão.");
     return Promise.reject(error);
 });
 
@@ -54,8 +55,12 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    if (error.response.status === 401 || error.response.status === 403) {
-        history.push("/auth/login");
+    if (!error.response) {
+        toast.error("Erro de conexão.");
     }
+    if (error.response.status === 400 || error.response.status === 401 || error.response.status === 403) {
+        toast.error("Nome de usuário ou senha incorretos.");
+    }
+
     return Promise.reject(error);
 });

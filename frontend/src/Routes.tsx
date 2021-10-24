@@ -2,7 +2,7 @@ import Navbar from 'components/Navbar';
 import Auth from 'pages/Auth';
 import MovieCatalog from 'pages/MovieCatalog';
 import MovieDescription from 'pages/MovieDescription';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import history from 'util/history';
 
 const Routes = () => (
@@ -10,7 +10,8 @@ const Routes = () => (
     <Navbar />
     <Switch>
       <Route path="/" exact>
-        <MovieCatalog />
+      <Redirect from="/" to="/auth/login" exact />
+      <Auth />
       </Route>
       <Route path="/auth">
         <Auth />
