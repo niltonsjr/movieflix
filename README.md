@@ -44,7 +44,9 @@ El proyecto constará de un backend desarrollado en Java con Spring Boot y un fr
 - __Back end:__  [Heroku](https://www.heroku.com/)  
 - __Front end:__ [Netlify](https://www.netlify.com/)
 
-##### :mag: Usuarios de acceso: 
+Enlace a la aplicación: https://nsj-movieflix.netlify.app/
+
+##### :mag: Usuarios de acceso:
 
 VISITOR -- email: bob@gmail.com | contraseña: 123456  
 MEMBER -- email: ana@gmail.com | contraseña: 123456
